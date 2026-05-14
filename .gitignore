@@ -1,0 +1,41 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build output
+bin/
+obj/
+
+# Rider / JetBrains optional
+.idea/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# OS files
+Thumbs.db
+Desktop.ini
+
+# Windrose runtime/user data - do not commit
+ServerFiles/
+Tools/
+Data/
+Profiles/
+Backups/
+WorldBackups/
+
+# Installer output - optional
+# Keep ignored so GitHub releases get files from script, not git commits
+Installer/Output/
+
+# Publish output if used
+publish/
+Publish/
