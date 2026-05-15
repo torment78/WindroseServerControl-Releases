@@ -1,0 +1,907 @@
+﻿<Window x:Class="Elka_windrose_server_control.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Windrose Server Control"
+        Icon="Assets/Icons/windrose_server.ico"
+        Width="1800"
+        Height="1200"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        Foreground="#F0F0F0">
+
+    <Window.Resources>
+        <Style x:Key="FlatGroupBoxStyle" TargetType="GroupBox">
+            <Setter Property="Foreground" Value="#F5E6C8"/>
+            <Setter Property="BorderBrush" Value="#B8863B"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GroupBox">
+                        <Grid>
+                            <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8"
+                            Background="#B0120D08"
+                            Padding="10"
+                            Margin="0,8,0,0"/>
+
+                            <TextBlock Text="{TemplateBinding Header}"
+                               Foreground="#FFD98A"
+                               Background="#0F0B08"
+                               FontWeight="SemiBold"
+                               Padding="8,0"
+                               Margin="14,0,0,0"
+                               HorizontalAlignment="Left"/>
+
+                            <ContentPresenter Margin="12,20,12,12"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="#F5E6C8"/>
+            <Setter Property="Background" Value="#66110C07"/>
+            <Setter Property="BorderBrush" Value="#A87932"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="9"
+                        Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background"
+                                Value="#8820160C"/>
+                                <Setter TargetName="ButtonBorder"
+                                Property="BorderBrush"
+                                Value="#D9A64A"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background"
+                                Value="#AA2A1B0D"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground"
+                                Value="#777777"/>
+                                <Setter TargetName="ButtonBorder"
+                                Property="BorderBrush"
+                                Value="#4A3A25"/>
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background"
+                                Value="#44100C08"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#F5E6C8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal">
+                            <Border x:Name="Box"
+                            Width="16"
+                            Height="16"
+                            CornerRadius="4"
+                            Background="#AA080604"
+                            BorderBrush="#7A5A2D"
+                            BorderThickness="1"
+                            Margin="0,0,7,0">
+                                <Path x:Name="CheckMark"
+                              Data="M 2 8 L 6 12 L 14 3"
+                              Stroke="#FFD98A"
+                              StrokeThickness="2"
+                              Visibility="Collapsed"/>
+                            </Border>
+
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckMark"
+                                Property="Visibility"
+                                Value="Visible"/>
+                                <Setter TargetName="Box"
+                                Property="BorderBrush"
+                                Value="#D9A64A"/>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Box"
+                                Property="BorderBrush"
+                                Value="#C8953F"/>
+                                <Setter TargetName="Box"
+                                Property="Background"
+                                Value="#CC120B05"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="RadioButton">
+            <Setter Property="Foreground" Value="#F5E6C8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <StackPanel Orientation="Horizontal">
+                            <Border x:Name="OuterCircle"
+                            Width="16"
+                            Height="16"
+                            CornerRadius="8"
+                            Background="#AA080604"
+                            BorderBrush="#7A5A2D"
+                            BorderThickness="1"
+                            Margin="0,0,7,0">
+                                <Ellipse x:Name="InnerDot"
+                                 Width="8"
+                                 Height="8"
+                                 Fill="#FFD98A"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Visibility="Collapsed"/>
+                            </Border>
+
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="InnerDot"
+                                Property="Visibility"
+                                Value="Visible"/>
+                                <Setter TargetName="OuterCircle"
+                                Property="BorderBrush"
+                                Value="#D9A64A"/>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="OuterCircle"
+                                Property="BorderBrush"
+                                Value="#C8953F"/>
+                                <Setter TargetName="OuterCircle"
+                                Property="Background"
+                                Value="#CC120B05"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="#F5E6C8"/>
+            <Setter Property="Background" Value="#CC080604"/>
+            <Setter Property="BorderBrush" Value="#7A5A2D"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="CaretBrush" Value="#F5E6C8"/>
+            <Setter Property="SelectionBrush" Value="#7A4A1D"/>
+            <Setter Property="SelectionTextBrush" Value="#FFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="TextBoxBorder"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                  Margin="{TemplateBinding Padding}"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TextBoxBorder"
+                                Property="BorderBrush"
+                                Value="#C8953F"/>
+                            </Trigger>
+
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="TextBoxBorder"
+                                Property="BorderBrush"
+                                Value="#D9A64A"/>
+                            </Trigger>
+
+                            <Trigger Property="IsReadOnly" Value="True">
+                                <Setter TargetName="TextBoxBorder"
+                                Property="Background"
+                                Value="#99080604"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Foreground" Value="#F5E6C8"/>
+            <Setter Property="Background" Value="#CC080604"/>
+            <Setter Property="BorderBrush" Value="#7A5A2D"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="6,3"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton"
+                                  Focusable="False"
+                                  IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                  ClickMode="Press"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="7">
+                                            <Grid>
+                                                <ContentPresenter Margin="8,0,30,0"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalAlignment="Left"
+                                                          RecognizesAccessKey="True"/>
+
+                                                <Path x:Name="Arrow"
+                                              Data="M 0 0 L 4 4 L 8 0 Z"
+                                              Fill="#D9A64A"
+                                              Width="8"
+                                              Height="4"
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Center"
+                                              Margin="0,0,10,0"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border"
+                                                Property="BorderBrush"
+                                                Value="#D9A64A"/>
+                                                <Setter TargetName="Border"
+                                                Property="Background"
+                                                Value="#DD120B05"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+
+                            <ContentPresenter x:Name="ContentSite"
+                                      IsHitTestVisible="False"
+                                      Content="{TemplateBinding SelectionBoxItem}"
+                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                      Margin="8,0,30,0"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Left"/>
+
+                            <Popup x:Name="Popup"
+                           Placement="Bottom"
+                           IsOpen="{TemplateBinding IsDropDownOpen}"
+                           AllowsTransparency="True"
+                           Focusable="False"
+                           PopupAnimation="Slide">
+                                <Grid MinWidth="{TemplateBinding ActualWidth}"
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border Background="#120D08"
+                                    BorderBrush="#7A5A2D"
+                                    BorderThickness="1"
+                                    CornerRadius="7"/>
+                                    <ScrollViewer Margin="2">
+                                        <ItemsPresenter/>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="#22080604"/>
+            <Setter Property="Foreground" Value="#A87932"/>
+            <Setter Property="Width" Value="12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Track x:Name="PART_Track"
+                           IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb Background="#7A5A2D"
+                                   BorderBrush="#C8953F"
+                                   BorderThickness="1"/>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Thumb">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="6"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Foreground" Value="#F5E6C8"/>
+            <Setter Property="Background" Value="#120D08"/>
+            <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="ItemBorder"
+                        Background="{TemplateBinding Background}"
+                        Padding="{TemplateBinding Padding}">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="ItemBorder"
+                                Property="Background"
+                                Value="#5A3517"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder"
+                                Property="Background"
+                                Value="#7A4A1D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/WindroseStormBackground.png"
+                    Stretch="UniformToFill"
+                    AlignmentX="Center"
+                    AlignmentY="Center"/>
+        </Grid.Background>
+
+        <Rectangle Fill="Transparent"/>
+
+        <Grid Margin="0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0"/>
+            </Grid.RowDefinitions>
+            <StackPanel Visibility="Collapsed">
+                <TextBox x:Name="ProfileNameTextBox"/>
+                <ComboBox x:Name="ProfilesComboBox"/>
+                <TextBox x:Name="InviteCodeTextBox"/>
+                <TextBox x:Name="ServerNameTextBox"/>
+                <TextBox x:Name="PasswordTextBox"/>
+                <TextBox x:Name="MaxPlayerCountTextBox"/>
+                <TextBox x:Name="UserSelectedRegionTextBox"/>
+                <TextBox x:Name="P2pProxyAddressTextBox"/>
+                <TextBox x:Name="DirectConnectionServerAddressTextBox"/>
+                <TextBox x:Name="DirectConnectionServerPortTextBox"/>
+                <TextBox x:Name="DirectConnectionProxyAddressTextBox"/>
+
+                <CheckBox x:Name="IsPasswordProtectedCheckBox"/>
+                <CheckBox x:Name="UseDirectConnectionCheckBox"/>
+                <CheckBox x:Name="AutoLoadLatestBackupIfHasBrokenCheckBox"/>
+            </StackPanel>
+            <Grid Grid.Row="0"
+      Height="48"
+      Margin="0,0,0,16"
+      MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+
+                <Border Background="#AA080604"
+            BorderBrush="#A87932"
+            BorderThickness="1"
+            CornerRadius="10"/>
+
+                <Grid Margin="14,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Windrose Server Control"
+                   VerticalAlignment="Center"
+                   FontSize="22"
+                   FontWeight="Bold"
+                   Foreground="#FFD98A"/>
+
+                    <StackPanel Grid.Column="1"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center">
+
+                        <Button Content="—"
+                    Width="38"
+                    Height="30"
+                    Click="MinimizeWindow_Click"
+                    Margin="0,0,8,0"/>
+
+                        <Button Content="□"
+                    Width="38"
+                    Height="30"
+                    Click="MaximizeRestoreWindow_Click"
+                    Margin="0,0,8,0"/>
+
+                        <Button Content="X"
+                    Width="38"
+                    Height="30"
+                    Click="CloseWindow_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            <StackPanel Grid.Row="1"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Margin="0,0,35,0"
+            Panel.ZIndex="20">
+
+                <TextBlock Text="Made by"
+               Foreground="#C8B894"
+               FontSize="20"
+               HorizontalAlignment="Center"
+               Margin="0,0,0,0"/>
+
+                <Image Source="Assets/elka_soft_logo.png"
+           Width="130"
+           Stretch="Uniform"/>
+            </StackPanel>
+            <Grid Grid.Row="1"
+                 Grid.RowSpan="2"
+                 Margin="20,450,20,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" MinHeight="424"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- COLUMN 1: SERVER CONTROL -->
+                <StackPanel Grid.RowSpan="2"
+                       Grid.Column="0">
+                    <GroupBox Header="Live Players"
+                      Style="{StaticResource FlatGroupBoxStyle}"
+                       Margin="0,0,0,12">
+                        <StackPanel Margin="10">
+
+                            <TextBlock x:Name="OnlinePlayersCountTextBlock"
+                   Text="Online: 0"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   Foreground="#FFD98A"
+                   Margin="0,0,0,8"/>
+
+                            <TextBlock x:Name="PlayerSessionStatsTextBlock"
+                   Text="Joins: 0 | Leaves: 0"
+                   Foreground="#C8B894"
+                   Margin="0,0,0,8"/>
+
+                            <ListBox x:Name="OnlinePlayersListBox"
+                 Height="90"
+                 Background="#CC080604"
+                 Foreground="#F5E6C8"
+                 BorderBrush="#7A5A2D"/>
+
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Server Control"
+                  Style="{StaticResource FlatGroupBoxStyle}"
+                  Margin="0,0,0,12">
+                        <StackPanel Margin="10">
+
+                            <TextBlock Text="Server Status"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,6"/>
+
+                            <TextBlock x:Name="ServerStatusTextBlock"
+                           Text="Stopped"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Server Tick Rate"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,6"/>
+
+                            <TextBlock x:Name="ServerTickRateTextBlock"
+                           Text="Unknown"
+                           FontSize="14"
+                           Margin="0,0,0,14"/>
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button x:Name="StartServerButton"
+                            Grid.Column="0"
+                            Content="Start Server"
+                            Height="42"
+                            Click="StartServer_Click"/>
+
+                                <Button x:Name="StopServerButton"
+                            Grid.Column="2"
+                            Content="Stop Server"
+                            Height="42"
+                            IsEnabled="False"
+                            Click="StopServer_Click"/>
+                            </Grid>
+
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="Launch"
+                  Style="{StaticResource FlatGroupBoxStyle}"
+                  Margin="0,0,0,12">
+                        <StackPanel Margin="10">
+
+                            <StackPanel Orientation="Horizontal"
+                            Margin="0,0,0,10">
+
+                                <RadioButton x:Name="VisibleConsoleRadioButton"
+                                 Content="Visible Console"
+                                 IsChecked="True"
+                                 Foreground="White"
+                                 GroupName="LaunchMode"
+                                 Margin="0,0,24,0"/>
+
+                                <RadioButton x:Name="HiddenWindowRadioButton"
+                                 Content="Hidden Window"
+                                 Foreground="White"
+                                 GroupName="LaunchMode"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox x:Name="AutoRestartCheckBox"
+                              Content="Auto restart"
+                              Foreground="White"
+                              Margin="0,0,24,0"/>
+
+                                <CheckBox x:Name="AutoWorldBackupCheckBox"
+                              Content="Hourly backups"
+                              Foreground="White"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </GroupBox>
+
+                </StackPanel>
+
+                <!-- COLUMN 2: SERVER FOLDER -->
+                <StackPanel Grid.RowSpan="2"
+            Grid.Column="2">
+
+                    <GroupBox Header="Server Folder"
+                  Style="{StaticResource FlatGroupBoxStyle}"
+                  Margin="0,0,0,12">
+                        <StackPanel Margin="10">
+
+                            <StackPanel Orientation="Horizontal"
+                            Margin="0,0,0,12">
+
+                                <RadioButton x:Name="DownloadWithSteamCmdRadioButton"
+             Content="Download with SteamCMD"
+             IsChecked="True"
+             Foreground="White"
+             GroupName="ServerSourceMode"
+             Margin="0,0,20,0"/>
+
+                                <RadioButton x:Name="ImportExistingFolderRadioButton"
+             Content="Import existing folder"
+             Foreground="White"
+             GroupName="ServerSourceMode"/>
+                            </StackPanel>
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0"
+                           Content="Install / Update"
+                            Height="36"
+                            Click="CopyOrImportServer_Click"/>
+
+                                <Button Grid.Column="2"
+                            Content="Open Folders"
+                            Height="36"
+                            Click="OpenFolders_Click"/>
+                            </Grid>
+
+                            <TextBlock Text="Copied server folder:"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,4"/>
+
+                            <TextBox x:Name="CopiedServerPathTextBox"
+                         IsReadOnly="True"
+                         TextWrapping="Wrap"
+                         MinHeight="58"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="World"
+                  Style="{StaticResource FlatGroupBoxStyle}"
+                  Margin="0,0,0,12">
+                        <StackPanel Margin="10">
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0"
+                            Content="Import"
+                            Height="34"
+                            Click="OpenWorldImport_Click"/>
+
+                                <Button Grid.Column="2"
+                            Content="Apply"
+                            Height="34"
+                            Click="RepairSelectedWorld_Click"/>
+
+                                <Button Grid.Column="4"
+                            Content="Backups"
+                            Height="34"
+                            Click="OpenWorldBackups_Click"/>
+                            </Grid>
+
+                            <TextBlock Text="Imported Server Worlds"
+                                        Foreground="#F5E6C8"/>
+
+                            <ComboBox x:Name="ServerWorldsComboBox"
+                               Height="34"
+                               SelectionChanged="ServerWorldsComboBox_SelectionChanged"
+                                Margin="0,4,0,10"
+                                Background="#CC080604"
+                                 Foreground="#F5E6C8"
+                                    BorderBrush="#7A5A2D"/>
+
+                            <TextBlock Text="World Island ID"/>
+                            <TextBox x:Name="WorldIslandIdTextBox"
+                         IsReadOnly="True"
+                         Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Update"
+Style="{StaticResource FlatGroupBoxStyle}">
+                        <StackPanel Margin="10">
+
+                            <Button Content="Check / Update Server"
+        Height="38"
+        Click="CheckUpdateServer_Click"
+        Margin="0,0,0,8"/>
+
+                            <Button Content="Check App Update"
+        Height="38"
+        Click="CheckAppUpdate_Click"
+        Margin="0,0,0,8"/>
+                            
+                            <TextBlock x:Name="ServerUpdateStatusTextBlock"
+           Text="Update status: Not checked"
+           Foreground="#C8B894"
+           TextWrapping="Wrap"/>
+
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+
+                <!-- COLUMN 3: SETTINGS / PROFILE -->
+                <StackPanel Grid.Column="4"
+                Grid.RowSpan="2">
+
+                    <GroupBox Header="Profiles"
+                  Style="{StaticResource FlatGroupBoxStyle}"
+                  Margin="0,0,0,12">
+                        <StackPanel Margin="10">
+
+                            <Button Content="Open Profiles"
+                        Height="34"
+                        Click="OpenProfiles_Click"
+                        Margin="0,0,0,8"/>
+
+                            <TextBlock x:Name="ActiveProfileTextBlock"
+                           Text="Active profile: Active ServerDescription.json"
+                           TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="Server Identity"
+                  Style="{StaticResource FlatGroupBoxStyle}"
+                  Margin="0,0,0,12">
+                        <StackPanel Margin="10">
+
+                            <TextBlock Text="Server Version / Deployment ID"/>
+                            <TextBox x:Name="DeploymentIdTextBox"
+                         IsReadOnly="True"
+                         Margin="0,4,0,10"/>
+
+                            <TextBlock Text="Persistent Server ID"/>
+                            <TextBox x:Name="PersistentServerIdTextBox"
+                         IsReadOnly="True"
+                         Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="Server Settings"
+                  Style="{StaticResource FlatGroupBoxStyle}"
+                  Margin="0,0,0,12">
+                        <StackPanel Margin="10">
+
+                            <Button Content="Open Server Settings"
+                        Height="38"
+                        Click="OpenServerSettings_Click"
+                        Margin="0,0,0,10"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0"
+                            Content="Load JSON"
+                            Height="34"
+                            Click="LoadServerDescription_Click"/>
+
+                                <Button Grid.Column="2"
+                            Content="Save JSON"
+                            Height="34"
+                            Click="SaveServerDescription_Click"/>
+                            </Grid>
+                        </StackPanel>
+                    </GroupBox>
+
+                </StackPanel>
+
+                <!-- COLUMN 4: SUMMARY / TAILSCALE -->
+                <StackPanel Grid.Row="0"
+            Grid.Column="6">
+
+                    <GroupBox Header="Current Server Summary"
+                  Style="{StaticResource FlatGroupBoxStyle}"
+                  Margin="0,0,0,12">
+                        <StackPanel Margin="10">
+
+                            <TextBlock x:Name="ServerSummaryTextBlock"
+                           Foreground="White"
+                           TextWrapping="Wrap"
+                           LineHeight="20"
+                           Text="No server settings loaded."/>
+                            <TextBlock x:Name="ActiveWorldPresetTextBlock"
+           Text="World preset: Default / Not loaded"
+           Foreground="#FFD98A"
+           FontWeight="SemiBold"
+           TextWrapping="Wrap"
+           Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="Remote Access"
+                  Style="{StaticResource FlatGroupBoxStyle}"
+                  Margin="0,0,0,12">
+                        <StackPanel Margin="10">
+
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0"
+                            Content="I Have Tailscale"
+                            Height="34"
+                            Click="HaveTailscale_Click"/>
+
+                                <Button Grid.Column="2"
+                            Content="Tailscale Setup"
+                            Height="34"
+                            Click="OpenTailscaleSetup_Click"/>
+                            </Grid>
+
+                            <Button Content="Launch Tailscale Funnel"
+                        Height="38"
+                        Click="LaunchTailscaleFunnel_Click"
+                        Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Recommended for external access without router port forwarding."
+                           Foreground="#C8D3E6"
+                           TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+                <Grid Grid.Row="1"
+                     Grid.Column="4"
+                      Grid.ColumnSpan="3"
+                       Margin="0,12,0,0">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Grid.Row="0"
+              Header="App Log"
+              Style="{StaticResource FlatGroupBoxStyle}">
+                        <TextBox x:Name="LogTextBox"
+                 IsReadOnly="True"
+                 TextWrapping="Wrap"
+                 VerticalScrollBarVisibility="Auto"
+                 Background="#DD080604"
+                 Foreground="#F5E6C8"
+                 BorderBrush="#7A5A2D"
+                 CaretBrush="#F5E6C8"/>
+                    </GroupBox>
+
+                    <GroupBox Grid.Row="2"
+              Header="Server Log"
+              Style="{StaticResource FlatGroupBoxStyle}">
+                        <TextBox x:Name="ServerLogTextBox"
+                 IsReadOnly="True"
+                 TextWrapping="Wrap"
+                 VerticalScrollBarVisibility="Auto"
+                 Background="#DD080604"
+                 Foreground="#F5E6C8"
+                 BorderBrush="#7A5A2D"
+                 CaretBrush="#F5E6C8"/>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
